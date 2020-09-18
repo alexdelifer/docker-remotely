@@ -25,7 +25,7 @@ RUN \
  dpkg -i packages-microsoft-prod.deb && \
  apt-get update && \
  apt-get install -y aspnetcore-runtime-2.2=2.2.0-1 && \
- wget -q https://github.com/Jay-Rad/Remotely/releases/download/v2020.02.14/Remotely_Server_Linux-x64.zip && \
+ wget -q https://github.com/lucent-sea/Remotely/releases/download/v2020.09.09.1651/Remotely_Server_Linux-x64.zip && \
  unzip -o Remotely_Server_Linux-x64.zip -d /var/www/remotely && \
  rm Remotely_Server_Linux-x64.zip && \
  setfacl -R -m u:www-data:rwx /var/www/remotely && \
