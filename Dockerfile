@@ -38,8 +38,8 @@ RUN \
 EXPOSE 5000
 
 # fix port bindings and set config environment
-ASPNETCORE_ENVIRONMENT	Production
-ASPNETCORE_URLS	http://*:5000
+ENV ASPNETCORE_ENVIRONMENT="Production"
+ENV ASPNETCORE_URLS="http://*:5000"
 
 WORKDIR /var/www/remotely
 CMD ["/usr/bin/dotnet", "Remotely_Server.dll"]
