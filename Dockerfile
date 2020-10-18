@@ -1,6 +1,7 @@
 FROM ubuntu:focal
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG VERSION=v2020.10.02.1757
 
 # environment settings
 ENV HOME="/config"
@@ -28,7 +29,7 @@ RUN \
   dpkg -i packages-microsoft-prod.deb && \
   apt-get update && \
   apt-get install -y dotnet-runtime-3.1 && \
-  wget -q https://github.com/lucent-sea/Remotely/releases/download/v2020.10.02.1757/Remotely_Server_Linux-x64.zip && \
+  wget -q https://github.com/lucent-sea/Remotely/releases/download/$VERSION/Remotely_Server_Linux-x64.zip && \
   unzip -o Remotely_Server_Linux-x64.zip -d /var/www/remotely && \
   rm Remotely_Server_Linux-x64.zip && \
   setfacl -R -m u:www-data:rwx /var/www/remotely && \
