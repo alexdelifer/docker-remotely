@@ -1,7 +1,7 @@
 FROM ubuntu:focal
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG VERSION=v2020.10.02.1757
+ARG VERSION=v2020.10.14.1849
 
 # environment settings
 ENV HOME="/config"
