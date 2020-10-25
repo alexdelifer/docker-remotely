@@ -3,7 +3,7 @@ on: [push, repository_dispatch]
 
 jobs:
   build:
-    name: Docker-Remotely
+    name: Build Container
     runs-on: ubuntu-latest
     steps:
       - id: remotely
@@ -11,11 +11,11 @@ jobs:
         with:
           repository: lucent-sea/Remotely
       - uses: actions/checkout@v2
-      - uses: docker/build-push-action@v1
+      - uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: alexdelifer/docker-remotely
-          dockerfile: Dockerfile
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - uses: docker/build-push-action@v2
+        with:
           build_args: VERSION=${{ steps.remotely.outputs.release }}
-          tags: latest, ${{ steps.remotely.outputs.release }}
+          tags: delifer/remotely:latest, delifer/remotely:${{ steps.remotely.outputs.release }}
