@@ -17,5 +17,5 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - uses: docker/build-push-action@v2
         with:
-          build_args: VERSION=${{ steps.remotely.outputs.release }}
+          build-args: VERSION=${{ steps.remotely.outputs.release }}
           tags: delifer/remotely:latest, delifer/remotely:${{ steps.remotely.outputs.release }}
