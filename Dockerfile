@@ -1,11 +1,16 @@
 FROM ubuntu:focal
 
+# ports and volumes
+EXPOSE 5000
+
 ARG DEBIAN_FRONTEND=noninteractive
-ARG VERSION=v2020.10.24.0945
 
 # environment settings
 ENV HOME="/config"
+ENV ASPNETCORE_ENVIRONMENT="Production"
+ENV ASPNETCORE_URLS="http://*:5000"
 
+# Base Deps
 RUN \
  apt-get update && \
  apt-get install -y \
@@ -22,25 +27,27 @@ RUN \
   libxtst-dev \
   xclip \
   jq \
-  curl && \
-  #aspnetcore-runtime-2.2 && \
-  mkdir -p /var/www/remotely && \
+  curl
+
+# Dotnet 3.1
+RUN \
   wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb && \
   dpkg -i packages-microsoft-prod.deb && \
   apt-get update && \
-  apt-get install -y dotnet-runtime-3.1 && \
+  apt-get install -y dotnet-runtime-3.1
+
+# Remotely
+RUN \
+  mkdir -p /var/www/remotely && \
+  mkdir /config && \
+  VERSION=$(curl -s https://api.github.com/repos/lucent-sea/Remotely/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")') && \
   wget -q https://github.com/lucent-sea/Remotely/releases/download/$VERSION/Remotely_Server_Linux-x64.zip && \
   unzip -o Remotely_Server_Linux-x64.zip -d /var/www/remotely && \
   rm Remotely_Server_Linux-x64.zip && \
   setfacl -R -m u:www-data:rwx /var/www/remotely && \
   chown -R www-data:www-data /var/www/remotely
 
-# ports and volumes
-EXPOSE 5000
-
-# fix port bindings and set config environment
-ENV ASPNETCORE_ENVIRONMENT="Production"
-ENV ASPNETCORE_URLS="http://*:5000"
+COPY docker-entrypoint.sh /
 
 WORKDIR /var/www/remotely
-CMD ["/usr/bin/dotnet", "Remotely_Server.dll"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
