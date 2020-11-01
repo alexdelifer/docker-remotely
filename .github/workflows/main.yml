@@ -16,10 +16,6 @@ jobs:
         with:
           repository: lucent-sea/Remotely
 
-      - name: Docker Layer Caching
-        uses: satackey/action-docker-layer-caching@v0.0.8
-        continue-on-error: true
-
       - name: Checkout Repo
         uses: actions/checkout@v2
 
