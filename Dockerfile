@@ -34,7 +34,7 @@ RUN \
   wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb && \
   dpkg -i packages-microsoft-prod.deb && \
   apt-get update && \
-  apt-get install -y dotnet-runtime-3.1
+  apt-get install -y aspnetcore-runtime-5.0
 
 # Remotely
 RUN \
