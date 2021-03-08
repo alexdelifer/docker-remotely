@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+#set -e
 
 FILE=/config/appsettings.json
 DEFAULT=/var/www/remotely/appsettings.json
@@ -32,7 +32,8 @@ else
 	echo "Modifying $FILE for docker compat..."
 	sed -i "s/\"SQLite\":.*/\"SQLite\"\: \"DataSource=\/config\/Remotely.db\",/" "$FILE"
 	sed -i "s/\"Theme.*/\"Theme\": \"Dark\",/" "$FILE"
-	sed -i 's///g' "$FILE"
+	sed -i 's/
+//g' "$FILE"
 
 fi
 
